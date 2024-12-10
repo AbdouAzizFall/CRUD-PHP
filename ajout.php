@@ -4,8 +4,12 @@ if(isset($_POST['enregistrer'])){
     $prenom=$_POST['prenom'];
     $classe=$_POST['classe'];
 
-    $sql="INSERT INTO etudiant VALUES (NULL,'$nom','$prenom','$classe')";
-    mysqli_query($connexion,$sql);
+    //$sql="INSERT INTO etudiant VALUES (NULL,'$nom','$prenom','$classe')";
+    //mysqli_query($connexion,$sql);
+
+    $stmt=$connexion->prepare("INSERT INTO etudiant (nom,prenom,classe) VALUES (?,?,?)");
+    $stmt->bind_param("sss",$nom,$prenom,$classe);
+    $stmt->execute();
     header('location: index.php');
 }
 ?>

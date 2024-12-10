@@ -15,8 +15,9 @@
         switch ($_GET['page']) {
             case 'delete':
                 $id=$_GET['id'];
-                $sql="DELETE FROM etudiant where id=$id";
-                mysqli_query($connexion,$sql);
+                $stmt=$connexion->prepare("DELETE FROM etudiant WHERE id=?");
+                $stmt->bind_param("i",$id);
+                $result=$stmt->execute();
                 header('location: index.php');
                 break;
             case 'ajouter':
